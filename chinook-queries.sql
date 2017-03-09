@@ -19,3 +19,29 @@ WHERE country = 'Brazil';
 SELECT Employee.LastName, Employee.FirstName, Employee.title
 FROM Employee
 WHERE employee.title = 'Sales Support Agent';
+
+-- 5- show a unique list of billing countries from the invoice table
+SELECT DISTINCT invoice.billingCountry
+FROM invoice
+-- ^ SELECT DISTINCT only one of each result if they are listed more than once
+
+-- 6- show invoices from customers from Brazil
+SELECT  customer.country, invoice.invoiceid, invoice.invoiceDate
+FROM customer, invoice
+WHERE country = 'Brazil';
+
+-- 7- invoices associated with each sales support agents (include agents full name)
+SELECT invoice.customerid, invoice.invoiceid, employee.firstName, employee.lastName
+FROM customer
+JOIN invoice
+ON customer.customerid = invoice.customerid
+JOIN employee
+ON customer.supportRepid = employee.employeeid
+
+-- 8- shows the invoice total, customer name, country, and sale agent name for all invoices and customers
+SELECT DISTINCT customer.firstName, customer.lastName, customer.country, invoice.total, employee.firstName, employee.lastName, invoice.*
+FROM customer
+JOIN invoice
+ON customer.customerid = invoice.customerid
+JOIN employee
+ON customer.supportRepid = employee.employeeid
